@@ -1,0 +1,12 @@
+header.header
+  .container
+    picture.logo
+      source(srcset="@img/logo.webp 1x, @img/logo@2x.webp 2x" type="image/webp")
+      img.logo__img( src="@img/logo.png" srcset="@img/logo.png 1x, @img/logo@2x.png 2x" alt="logo")
+
+    form.form#form
+      label.form__label
+        input.input-reset.form__input(type="search" name="search" placeholder="Search..." aria-label="Finde character")
+      button.btn-reset.form__btn
+        svg.form__svg(aria-hidden="true")
+          use(xlink:href="img/sprite.svg#search")
