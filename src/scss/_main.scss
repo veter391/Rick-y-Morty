@@ -43,12 +43,16 @@
     right: 0;
     fill: var(--white);
     transform-origin: center center;
-    transition-property: fill, transform;
+    transition-property: fill;
     transition-timing-function: ease;
     transition-duration: .3s;
     &:hover {
-      fill: var(--primary);
-      transform: rotateY(180deg);
+      fill: var(--hover);
+      // transform: rotateY(180deg);
+    }
+    &:active {
+      fill: var(--active);
+      // transform: scale(.9);
     }
   }
   &__svg {
@@ -66,8 +70,9 @@
   &__list {
     display: grid;
     grid-template-columns: repeat(3, 1fr); // IE
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
+    margin-bottom: rem(50);
   }
 
   &__item {
@@ -82,7 +87,6 @@
 
     &_active {
       box-shadow: 4px 4px 13px var(--pasive);
-      // border-color: #28db2e;
     }
   }
 
@@ -93,7 +97,7 @@
     margin: 0 auto;
     margin-bottom: rem(15);
     border-radius: 50%;
-    transform: translateY(-4%);
+    transform: translateY(-12px);
   }
 
   &__name, &__specie {
@@ -112,18 +116,89 @@
       margin-right: rem(7);
       border-radius: 50%;
       content: '';
+      animation-duration: 1.5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
       background-color: rgb(40, 219, 46);
-      // box-shadow: 0 0 10px black;
-      animation: specieActive 1.5s ease-in-out infinite;
+      animation-name: specieHuman;
+    }
+
+    &_other::before {
+      background-color: #dd0000;
+      animation-name: specieOther;
     }
   }
 
+
+  &__btn {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    margin: 0 auto;
+    padding: rem(15) rem(40);
+    border: 2px solid var(--pasive);
+    font-size: rem(18);
+    color: var(--pasive);
+    z-index: 2;
+    transition-property: color, opacity;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+    &::before {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      content: '';
+      background-color: var(--pasive);
+      z-index: -1;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+
+    &:hover {
+      color: var(--primary);
+      &::before {
+        transform: none;
+      }
+    }
+
+    &:active {
+      opacity: .7;
+    }
+  }
+
+  &__btn.disabled {
+    opacity: .2;
+    color: var(--primary);
+    cursor: initial;
+    &::before {
+      transform: translateX(0);
+    }
+  }
 }
 
-@keyframes specieActive {
+
+
+@keyframes specieHuman {
   0%{box-shadow: 0 0 3px #47fff6;}
-  50%{box-shadow: 0 0 11px #47fff6;}
+  50%{box-shadow: 0 0 11px #47fff6; background-color:#0ff823;}
   100%{box-shadow: 0 0 3px #47fff6;}
+}
+
+@keyframes specieOther {
+  0% {
+    box-shadow: 0 0 3px red;
+  }
+
+  50% {
+    box-shadow: 0 0 11px red;
+    background-color: #f00000;
+  }
+
+  100% {
+    box-shadow: 0 0 3px red;
+  }
 }
 
 .subtitle {
