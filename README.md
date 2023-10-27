@@ -10,4 +10,5 @@
 ...
 
 ## More
-...
+
+* Used Api => [Rick y morty Api](https://rickandmortyapi.com/)

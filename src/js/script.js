@@ -1,50 +1,54 @@
 "use strict";
 // import diferents modules:
-import {isWebp, Modal, burger , Tabs, Accordion, mobileCheck,
-  isMobile, isTablet, isDesktop, getHeaderHeight,
-  createPopper, right, scrollingAnim, consoleText} from "./imports.js";
-// import Swiper from 'swiper';
-// import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
-// Swiper.use([Navigation, Pagination, Autoplay, EffectFade]);
-import {fade, unfade} from "./libraries/fade-unfade.js";
+import {isWebp} from "./imports.js";
 import LazyLoad from "vanilla-lazyload";
 import "focus-visible";
 import { validateForms } from './libraries/validate-form.js';
-import Slider from './libraries/slider.js';
-import { data, error, event } from "jquery";
-// import "simplebar";
-// import * as myfun from "./modules/functions.js"
 
 window.addEventListener('DOMContentLoaded', function () {
   // check webp
   isWebp();
   // connect lazy load
-  new LazyLoad({
-    elements_selector: '.lazy' ,
-  });
+  new LazyLoad({elements_selector: '.lazy'});
   // my js code
   console.log('Script connected...');
 
-  // burger initialitzation
-  // burger();
-
   // global variables
-  const _URL = 'https://rickandmortyapi.com/api/character'; // general character url
-  const characterList = document?.querySelector('.characters__list'); // general list
-  const btnMore = document?.querySelector('.characters__btn'); // btn to add more characters
+  const _URL = 'https://rickandmortyapi.com/api/character';           //! Api url dont touch!
+  const characterList = document?.querySelector('.characters__list'); // list of characters
+  const btnMore = document?.querySelector('.characters__btn');        // btn to add more characters
+  const form = document?.querySelector('.form');                      // search form
 
-  let charactersPage = 1; // _URL + `?page=${1}` => page of characters from Api last page 42! default = 1
+  const loader = document?.querySelector('.loading');
+  loader.innerHTML = `<img style="width:320px; margin:0 auto;" class="loader" src="files/loading.png" alt="loader">`; // create loader and delete it when fetch respond
+
+  let charactersPage = 1; // set first page of characters
+  let charactersLastPage = 42; // set last page of characters
 
   characterList.innerHTML = ''; // clear list
 
 
   //### CLASSES AND FUNCTIONS
+  // this function get all characters from Api
   async function getCharacters(url) {
     await fetch(url)
-          .then(data => data.json())
           .then(data => {
 
-            console.log(data);
+            loader.innerHTML = '';
+
+            if (!data.ok) {
+              throw new Error(data.status + ' Not found')
+            }
+
+            return data.json();
+          })
+          .then(data => {
+
+            // add total pages to variable
+            charactersLastPage = data.info.pages;
+
+            // change btn display when exist one page or not
+            btnMore.style.display = charactersLastPage > 1 ? 'block' : 'none'
 
             data.results.forEach(item => {
               // characters__item_active
@@ -52,41 +56,64 @@ window.addEventListener('DOMContentLoaded', function () {
                 <li class="characters__item">
                   <img class="characters__img" src="${ item.image }" alt="${ item.name }">
                   <h3 class="characters__name">${ item.name}</h3>
-                  <div class="characters__specie ${item.species !== 'Human' ? '.characters__specie_other' : ''} ">${ item.species }</div>
+                  <div class="characters__specie ${item.species !== 'Human' ? 'characters__specie_other' : ''} ">${ item.species }</div>
                   <div class="characters__origin">${ item.origin.name }</div>
                 </li>
               `;
             })
 
           })
-          .catch(err => console.error(err));
-
-
+          .catch(err => {
+            // block btn
+            btnMore.style.display = 'none';
+            btnMore.style.visibility = 'hidden';
+            // add error block
+            characterList.innerHTML = `
+                <li class="server-error">
+                  <picture class="server-error-picture">
+                    <source srcset="img/error.webp 1x, img/error@2x.webp 2x" type="image/webp">
+                    <img class="server-error-img" src="img/error.png" srcset="img/error.png 1x, img/error@2x.png 2x" alt="error">
+                  </picture>
+                  <p>${err}</p>
+                </li>
+              `;
+          });
   }
 
   // add 20 characters in the begining
-  getCharacters(_URL + `?page=${charactersPage}`)
-
+  getCharacters(_URL + `?page=${charactersPage}`);
 
   // add event to btn
   btnMore.onclick = () => {
-    
     // when click call this function to add next page of characters to list.
-    getCharacters(_URL + `?page=${++charactersPage}`); // !* I NEED TO CHANGE IT THAT DONT CALL IT WHEN PAGES > charactersPage
+    if(charactersPage < charactersLastPage) {
+      getCharacters(_URL + `?page=${++charactersPage}`);
+    }
 
     // check last page
-    if (charactersPage >= 42) {
+    if (charactersPage >= charactersLastPage) {
       btnMore.setAttribute('disabled', true);
-      btnMore.classList.add('disabled')
+      btnMore.classList.add('disabled');
     }
 
   };
 
-  // const filterSearch = (arr, value) => arr.filter(item => item.toLowerCase().includes(value));
+  const findCharacter = e => {
+    // delete default settings of form
+    e.preventDefault();
 
-  // const arr = ['Marta', 'Mar', 'joni', 'joel', 'User', 'user33'];
-  // const val = 'joye';
+    loader.innerHTML = `<img style="width:320px; margin:0 auto;" class="loader" src="files/loading.png" alt="loader">`; // create loader and delete it when fetch respond
+    characterList.innerHTML = ''; // clear list
 
-  // console.log(filterSearch(arr, val));
+    const name = form.search.value;
+
+    // calling getCharacters() and filtering it by name
+    getCharacters(_URL + `?name=${name}&page=${charactersPage}`);
+  };
+
+  //check always when input something or submit form using callback
+  form.addEventListener('input', findCharacter);
+  form.addEventListener('submit', findCharacter);
+
 
 });

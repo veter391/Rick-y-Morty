@@ -11,7 +11,7 @@
 // }
 
 // ::::: Реализация бургер-меню :::::
-export { burger } from './libraries/burger.js';
+// export { burger } from './libraries/burger.js';
 // burger();
 
 // ::::: Реализация остановки, включения скролла (не забудьте вызвать функцию) :::::
@@ -19,7 +19,7 @@ export { burger } from './libraries/burger.js';
 // const paddingOffset = window.innerWidth - document.body.offsetWidth;
 
 // ::::: Реализация модального окна :::::
-export { Modal } from "./libraries/modal.js";
+// export { Modal } from "./libraries/modal.js";
 // const modal = new Modal();
 
 // ::::: Реализация табов :::::
@@ -64,7 +64,7 @@ export { Modal } from "./libraries/modal.js";
 // });
 
 // ::::: Подключение анимаций по скроллу :::::
-export {scrollingAnim} from "./libraries/scroll-animation.js";
+// export {scrollingAnim} from "./libraries/scroll-animation.js";
 // scrollingAnim('.anim-item') // or add custom class;
 // ::: or use special plugin
 // import AOS from 'aos';

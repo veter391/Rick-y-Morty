@@ -1,9 +1,6 @@
 @import 'imports';
 /* ::: Instrucrions :::
 
-- use adaptive mixin-
-  @include adaptive("padding", 50 ,20, 0);
-
 -use convert px in (rem em %)-
   p {
 	  font-size:rem(20px);
@@ -12,7 +9,8 @@
 ::: Instructions ::: */
 
 // ::: Inckude Mixins :::
-@include keyframes;
+// @include keyframes;
+
 // ::: Variables :::
 //-Required Variables!!
 $maxWidth: 1920; // not px
@@ -28,10 +26,9 @@ $body-font: "OpenSans";
   --light-theme:#EEEEEE;
   --primary: #008d88;
   --hover: #14dd3f;
-  --active: #00aa55; // for focus state
+  --active: #00aa55;
   --white: white;
   --pasive: rgb(199, 245, 179);
-  // --blick-setting: blick 1.9s ease-in infinite;
 }
 
 html {
@@ -66,23 +63,6 @@ img {display: block;max-width: 100%;height: auto;object-fit: cover;}
 a {text-decoration: none;color: inherit;outline: none;}
 h1,h2,h3,h4,h5,h6,p {margin: 0;transition: color .3s ease;}
 picture {display: block; width: fit-content;}
-// section {
-//   position: relative;
-//   display: grid;
-//   grid-template-columns: 1fr 1fr;
-//   min-height: 100vh;
-// }
-
-/* #preloader_preload {
-	display: block;
-	position: fixed;
-	z-index: 300;
-	top: 0;left: 0;
-	width: 100%;
-	height: 100%;
-	background: #9B59B6 url(img/rings.svg) center center no-repeat;
-	background-size:124px;
-} */
 
 .visually-hidden {position: absolute;overflow: hidden;clip: rect(0px 0px 0px 0px);clip: rect(0, 0, 0, 0);width: 1px;height: 1px;margin: -1px;padding: 0;border: 0;}
 .wrapper {
@@ -97,12 +77,14 @@ picture {display: block; width: fit-content;}
   // overflow: ;
   background-color: var(--dark-theme);
 }
+
 .container {
   margin: 0 auto;
 	max-width: $maxWidthContainer + px;
   padding-right: $containerPadding + px;
   padding-left: $containerPadding + px;
 }
+
 .btn-reset {padding: 0;border: none;background: transparent;cursor: pointer;}
 .list-reset {list-style: none;margin: 0;padding: 0;}
 .input-reset {
@@ -119,6 +101,7 @@ picture {display: block; width: fit-content;}
 		display: none;
 	}
 }
+
 .is-hidden {display: none !important; /* stylelint-disable-line declaration-no-important */}
 .js-focus-visible:focus:not(.focus-visible) {outline: none;}
 // if scroll is disable add this class to body
@@ -130,26 +113,50 @@ picture {display: block; width: fit-content;}
 	width: 100%;
   overscroll-behavior: none;
 }
+
+
 // ::: Custom Scss :::
-//
-//
-//
-
-
 @import 'header';
 @import 'main';
 @import 'footer';
 @import 'queries';
 
-//
 .colored {
   color: var(--pasive);
 }
 
+.server-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: peru;
+  &-picture {
+    display: block;
+    max-height: 400px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    transform: translateX(30px);
+  }
+  &-img {
+    display: block;
+    max-height: 400px;
+  }
+}
 
-// ::: My Scss :::
+.loader {
+  animation: loader 2.3s linear infinite;
+}
 
-// ::: Sections :::
+@keyframes loader {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+}
+
+// ::: Custom Scss :::
 
 // active classes
 .is-invalid {
@@ -165,8 +172,8 @@ picture {display: block; width: fit-content;}
   opacity: 1;
   z-index: 5;
 }
-/*Убрать полосу прокрутки для всей страницы*/
-/*не работает в firefox!!!*/
+/*Remove scrollbar for entire page*/
+/*doesn't work in firefox!!!*/
 
 *::-webkit-scrollbar {
   width: 7px;
@@ -186,7 +193,6 @@ picture {display: block; width: fit-content;}
   background: transparent;
   background-color: transparent;
 }
-
 
 .ytp-pause-overlay {
   display: none;
