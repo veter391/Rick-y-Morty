@@ -12,3 +12,5 @@
 ## More
 
 * Used Api => [Rick y morty Api](https://rickandmortyapi.com/)
+* src/(scss/js)/libraries => is the solution to something small problems
+* src/(scss/js)/imports => help to import libraries to project

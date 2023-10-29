@@ -6,40 +6,64 @@ section.characters
 
     ul.characters__list.list-reset
       li.characters__item.characters__item_active
-        picture.characters__picture
-          source(srcset="https://rickandmortyapi.com/api/character/avatar/1.jpeg")
-          img.characters__img( src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" srcset="https://rickandmortyapi.com/api/character/avatar/1.jpeg" alt="image")
+        .characters__title
+          img.characters__img(srcset='https://rickandmortyapi.com/api/character/avatar/1.jpeg' alt='Rick Sanches')
+          h3.characters__name Rick Sanches
+        p.characters__info
+          span.characters__status.status
+            span.colored Status: Alive
+          span.characters__specie
+            span.colored Specie: Human
+          span.characters__origin
+            span.colored Last location: Earth (C-137)
 
-        h3.characters__name Rick Sanches
-        .characters__specie Human
-        .characters__origin Earth (C-137)
+      li.characters__item.characters__item_active
+        .characters__title
+          img.characters__img(srcset='https://rickandmortyapi.com/api/character/avatar/1.jpeg' alt='morty')
+          h3.characters__name Morty
+        p.characters__info
+          span.characters__status.status
+            span.colored Status: Alive
+          span.characters__specie
+            span.colored Specie: Human
+          span.characters__origin
+            span.colored Last location: Earth (C-137)
 
-      li.characters__item
-        picture.characters__picture
-          source(srcset="https://rickandmortyapi.com/api/character/avatar/1.jpeg")
-          img.characters__img( src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" srcset="https://rickandmortyapi.com/api/character/avatar/1.jpeg" alt="image")
+      li.characters__item.characters__item_active
+        .characters__title
+          img.characters__img(srcset='https://rickandmortyapi.com/api/character/avatar/1.jpeg' alt='Rick Sanches')
+          h3.characters__name noname
+        p.characters__info
+          span.characters__status.status.characters__status_dead
+            span.colored Status: Dead
+          span.characters__specie
+            span.colored Specie: Human
+          span.characters__origin
+            span.colored Last location: Earth (C-137)
 
-        h3.characters__name Morty Smith
-        .characters__specie Human
-        .characters__origin Earth (C-137)
+      li.characters__item.characters__item_active
+        .characters__title
+          img.characters__img(srcset='https://rickandmortyapi.com/api/character/avatar/1.jpeg' alt='Rick Sanches')
+          h3.characters__name Rick Sanches
+        p.characters__info
+          span.characters__status.status.characters__status_dead
+            span.colored Status: Alive
+          span.characters__specie
+            span.colored Specie: Human
+          span.characters__origin
+            span.colored Last location: Earth (C-137)
 
-      li.characters__item
-        picture.characters__picture
-          source(srcset="https://rickandmortyapi.com/api/character/avatar/1.jpeg")
-          img.characters__img( src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" srcset="https://rickandmortyapi.com/api/character/avatar/1.jpeg" alt="image")
-
-        h3.characters__name Summer Smith
-        .characters__specie.characters__specie_other Human
-        .characters__origin uncnow
-
-      li.characters__item
-        picture.characters__picture
-          source(srcset="https://rickandmortyapi.com/api/character/avatar/1.jpeg")
-          img.characters__img( src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" srcset="https://rickandmortyapi.com/api/character/avatar/1.jpeg" alt="image")
-
-        h3.characters__name Beth Smith
-        .characters__specie.characters__specie_other Human
-        .characters__origin uncnow
+      li.characters__item.characters__item_active
+        .characters__title
+          img.characters__img(srcset='https://rickandmortyapi.com/api/character/avatar/1.jpeg' alt='Rick Sanches')
+          h3.characters__name Rick Sanches
+        p.characters__info
+          span.characters__status.status
+            span.colored Status: Alive
+          span.characters__specie
+            span.colored Specie: Human
+          span.characters__origin
+            span.colored Last location: Earth (C-137)
 
     .loading
 

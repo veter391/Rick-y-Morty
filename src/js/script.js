@@ -1,115 +1,200 @@
 "use strict";
 // import diferents modules:
-import {isWebp} from "./imports.js";
+import { isWebp } from "./imports.js";
 import LazyLoad from "vanilla-lazyload";
 import "focus-visible";
-import { validateForms } from './libraries/validate-form.js';
 
 window.addEventListener('DOMContentLoaded', function () {
-  // check webp
-  isWebp();
-  // connect lazy load
-  new LazyLoad({elements_selector: '.lazy'});
-  // my js code
-  console.log('Script connected...');
+  // ### VARIABLES ###
+  // variables
+  const _URL = 'https://rickandmortyapi.com/api/character',         //! Api url dont touch!
 
-  // global variables
-  const _URL = 'https://rickandmortyapi.com/api/character';           //! Api url dont touch!
-  const characterList = document?.querySelector('.characters__list'); // list of characters
-  const btnMore = document?.querySelector('.characters__btn');        // btn to add more characters
-  const form = document?.querySelector('.form');                      // search form
+  charactersList = document?.querySelector('.characters__list'),    // list of characters
+  btnMore = document?.querySelector('.characters__btn'),            // btn to add more characters
+  form = document?.querySelector('.form'),                          // search form
+  scrollToTopBtn = document?.querySelector('.aditional__totop'),    // btn for scroll to top
+  changeThemeBtn = document?.querySelector('.aditional__theme'),    // btn for change the theme
+  loader = document?.querySelector('.loading');                     // loading when wait to fetch
 
-  const loader = document?.querySelector('.loading');
-  loader.innerHTML = `<img style="width:320px; margin:0 auto;" class="loader" src="files/loading.png" alt="loader">`; // create loader and delete it when fetch respond
-
-  let charactersPage = 1; // set first page of characters
-  let charactersLastPage = 42; // set last page of characters
-
-  characterList.innerHTML = ''; // clear list
+  let charactersPage = 1, // set first page of characters
+      charactersLastPage = 42; // set last page of characters
 
 
   //### CLASSES AND FUNCTIONS
   // this function get all characters from Api
   async function getCharacters(url) {
+    // await to response
     await fetch(url)
-          .then(data => {
+      .then(data => {
 
-            loader.innerHTML = '';
+        loader.innerHTML = '';
 
-            if (!data.ok) {
-              throw new Error(data.status + ' Not found')
-            }
+        if (!data.ok) {
+          throw new Error(data.status + ' Not found')
+        }
 
-            return data.json();
-          })
-          .then(data => {
+        return data.json();
+      })
+      .then(data => {
 
-            // add total pages to variable
-            charactersLastPage = data.info.pages;
+        // add total pages to variable
+        charactersLastPage = data.info.pages;
 
-            // change btn display when exist one page or not
-            btnMore.style.display = charactersLastPage > 1 ? 'block' : 'none'
 
-            data.results.forEach(item => {
-              // characters__item_active
-              characterList.innerHTML += `
-                <li class="characters__item">
-                  <img class="characters__img" src="${ item.image }" alt="${ item.name }">
-                  <h3 class="characters__name">${ item.name}</h3>
-                  <div class="characters__specie ${item.species !== 'Human' ? 'characters__specie_other' : ''} ">${ item.species }</div>
-                  <div class="characters__origin">${ item.origin.name }</div>
-                </li>
-              `;
-            })
+        // check last page
+        if (charactersPage >= charactersLastPage) {
+          btnMore.setAttribute('disabled', true);
+          btnMore.classList.add('disabled');
+        } else {
+          btnMore.removeAttribute('disabled');
+          btnMore.classList.remove('disabled');
+        }
 
-          })
-          .catch(err => {
-            // block btn
-            btnMore.style.display = 'none';
-            btnMore.style.visibility = 'hidden';
-            // add error block
-            characterList.innerHTML = `
-                <li class="server-error">
-                  <picture class="server-error-picture">
-                    <source srcset="img/error.webp 1x, img/error@2x.webp 2x" type="image/webp">
-                    <img class="server-error-img" src="img/error.png" srcset="img/error.png 1x, img/error@2x.png 2x" alt="error">
-                  </picture>
-                  <p>${err}</p>
-                </li>
-              `;
-          });
+        // hide btn more when exist only one page or no pages
+        btnMore.style.cssText = charactersLastPage > 1
+                              ? `display: block; visibility: visible`
+                              : `display: none; visibility: hidden`;
+
+        data.results.forEach(item => {
+
+          const { image, name, status, species, origin } = item;
+
+          // characters__item_active
+          charactersList.innerHTML += `
+            <li class="characters__item">
+              <div class="characters__title">
+                <img class="characters__img" src="${ image }" alt="${ name }">
+                <h3 class="characters__name">${ name }</h3>
+              </div>
+
+              <p class="characters__info">
+                <span class="characters__status ${ status !== 'Alive' ? 'characters__status_dead' : '' } ">
+                  <span class="colored">Status: </span>
+                  ${ status }
+                </span>
+                <span class="characters__specie">
+                  <span class="colored">Specie: </span>
+                  ${ species }
+                </span>
+                <span class="characters__origin">
+                  <span class="colored">Last location: </span>
+                  ${ origin.name }
+                </span>
+              </p>
+            </li>
+          `;
+        })
+
+      })
+      .catch(err => {
+        // block btn
+        btnMore.style.display = 'none';
+        btnMore.style.visibility = 'hidden';
+        // add error block
+        charactersList.innerHTML = `
+            <li class="server-error">
+              <picture class="server-error-picture">
+                <source srcset="img/error.webp 1x, img/error@2x.webp 2x" type="image/webp">
+                <img class="server-error-img" src="img/error.png" srcset="img/error.png 1x, img/error@2x.png 2x" alt="error">
+              </picture>
+              <p>${err}</p>
+            </li>
+          `;
+      });
   }
 
-  // add 20 characters in the begining
-  getCharacters(_URL + `?page=${charactersPage}`);
+  // smooth scroll function
+  function scrollTo(element) {
+    // if element not exist throw error
+    if(!element) throw new Error(`Parameter(element) is: ${element}`);
 
-  // add event to btn
-  btnMore.onclick = () => {
-    // when click call this function to add next page of characters to list.
-    if(charactersPage < charactersLastPage) {
-      getCharacters(_URL + `?page=${++charactersPage}`);
-    }
+    // if element exists add scroll
+    document.querySelector(element).scrollIntoView({
+      behavior: 'smooth'
+    });
+  }
 
-    // check last page
-    if (charactersPage >= charactersLastPage) {
-      btnMore.setAttribute('disabled', true);
-      btnMore.classList.add('disabled');
-    }
+  // get character and validete input
+  function getValidCharacters(characterPage) {
+    // simple validate for input
+    const name = form.search.value.replace(/[^a-zA-Z0-9 ]/g, "");
 
-  };
+    // calling getCharacters() and filtering it by name
+    getCharacters(_URL + `?page=${characterPage}&name=${name}`);
+  }
 
-  const findCharacter = e => {
+  function findCharacter(e){
     // delete default settings of form
     e.preventDefault();
 
-    loader.innerHTML = `<img style="width:320px; margin:0 auto;" class="loader" src="files/loading.png" alt="loader">`; // create loader and delete it when fetch respond
-    characterList.innerHTML = ''; // clear list
+    // reset first pack of characters
+    charactersPage = 1;
 
-    const name = form.search.value;
+    // clear characters list and reset loader
+    resetList();
 
-    // calling getCharacters() and filtering it by name
-    getCharacters(_URL + `?name=${name}&page=${charactersPage}`);
+    getValidCharacters(charactersPage);
   };
+
+  function resetList() {
+    // create loader and delete it when fetch respond
+    loader.innerHTML = `<img style="width:320px; margin:0 auto;" class="loader" src="files/loading.png" alt="loader">`;
+    // clear characters list
+    charactersList.innerHTML = '';
+  }
+
+  function start() {
+    // check webp suport
+    isWebp();
+
+    // connect lazy load
+    new LazyLoad({ elements_selector: '.lazy' });
+
+    // log scripr connected
+    console.log('Script connected...');
+
+    // clear characters list and reset loader
+    resetList();
+
+    // add 20 characters in the begining
+    getCharacters(_URL + `?page=${charactersPage}`);
+  }
+
+
+  // ### START ###
+  start();
+
+
+
+  // ### EVENTS ###
+  // when click call this function to add next page of characters to list.
+  btnMore.onclick = () => { if(charactersPage < charactersLastPage) getValidCharacters(++charactersPage)};
+
+  // scroll to Top => get data-to='...' from current btn
+  scrollToTopBtn.onclick = e => scrollTo(e.currentTarget.dataset.to);
+
+  // change theme
+  changeThemeBtn.addEventListener('click', e => {
+    // toggle active class to btn
+    e.currentTarget.classList.toggle('theme-btn--active')
+
+    // check current btn to active class and change theme
+    if (e.currentTarget.classList.contains('theme-btn--active')) {
+      document.documentElement.style.cssText = `
+      --light-theme: #333;
+      --dark-theme: wheat;
+      --primary: rgb(199, 245, 179);
+      --hover: #14ddc9;
+      --pasive: #008d88`;
+    } else {
+      document.documentElement.style.cssText = `
+      --light-theme: #EEEEEE;
+      --dark-theme: #005956;
+      --primary: #008d88;
+      --hover: #14dd3f;
+      --pasive: rgb(199, 245, 179)`;
+    }
+  });
 
   //check always when input something or submit form using callback
   form.addEventListener('input', findCharacter);

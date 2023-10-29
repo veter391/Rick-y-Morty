@@ -26,9 +26,15 @@ $body-font: "OpenSans";
   --light-theme:#EEEEEE;
   --primary: #008d88;
   --hover: #14dd3f;
-  --active: #00aa55;
-  --white: white;
+  // --active: #00aa55;
   --pasive: rgb(199, 245, 179);
+
+    // --dark-theme: wheat;
+    // --light-theme: #333;
+    // --primary: rgb(199, 245, 179);
+    // --hover: #14ddc9;
+    // --active: #0080aa;
+    // --pasive: #008d88;
 }
 
 html {
@@ -76,6 +82,7 @@ picture {display: block; width: fit-content;}
 	overflow: hidden; /* if you use position: sticky on the site - remove this setting */
   // overflow: ;
   background-color: var(--dark-theme);
+  transition: background-color .3s ease-in-out;
 }
 
 .container {
@@ -123,6 +130,7 @@ picture {display: block; width: fit-content;}
 
 .colored {
   color: var(--pasive);
+  transition: color .3s ease-in-out;
 }
 
 .server-error {
@@ -156,6 +164,24 @@ picture {display: block; width: fit-content;}
   }
 }
 
+.aditional {
+  position: fixed;
+
+  right: 30px;
+  bottom: 30px;
+
+  &__totop {
+    margin-bottom: 30px;
+  }
+
+  &__theme, &__totop {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: greenyellow;
+  }
+}
+
 // ::: Custom Scss :::
 
 // active classes
@@ -186,7 +212,7 @@ picture {display: block; width: fit-content;}
   border-top-left-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-  background:var(--primary);
+  background:var(--pasive);
 }
 
 *::-webkit-scrollbar-track {
