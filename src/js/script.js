@@ -176,10 +176,10 @@ window.addEventListener('DOMContentLoaded', function () {
   // change theme
   changeThemeBtn.addEventListener('click', e => {
     // toggle active class to btn
-    e.currentTarget.classList.toggle('theme-btn--active')
+    e.currentTarget.classList.toggle('light')
 
     // check current btn to active class and change theme
-    if (e.currentTarget.classList.contains('theme-btn--active')) {
+    if (e.currentTarget.classList.contains('light')) {
       document.documentElement.style.cssText = `
       --light-theme: #333;
       --dark-theme: wheat;

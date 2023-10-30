@@ -3,16 +3,20 @@
   &__bottom {
     text-align: center;
     &-link {
-      transition-property: color, border-color;
+      transition-property: opacity, color, border-color;
       transition-timing-function: ease;
       transition-duration: .3s;
       border-bottom: 1px solid transparent;
-      &:hover {
+      &:hover, &.focus-visible {
           border-color: var(--pasive);
           color: var(--pasive);
         .colored {
           color: var(--light-theme);
         }
+      }
+
+      &:active {
+        opacity: .7;
       }
     }
   }
