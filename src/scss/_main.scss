@@ -1,77 +1,11 @@
-.logo {
-  display: block;
-  margin: 0 auto;
-  margin-bottom: rem(30);
-  &__img {
-    max-width: 500px;
-    max-height: 190px;
-    display: block;
-  }
-
-  transition: filter 1.5s ease;
-  &:hover {
-    filter: hue-rotate(300deg);
-  }
-}
-
-.form {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  &__input {
-    width: 100%;
-    border: 2px solid transparent;
-    padding: rem(15);
-    border-radius: rem(30);
-    background-color: rgba(255, 255, 255, .4);
-    color: var(--light-theme);
-    transition: border-color .3s ease-in-out;
-
-    &::placeholder {
-      color: var(--light-theme);
-      transition: color .3s ease-in-out;
-    }
-
-    &:hover {
-      border-color: var(--pasive);
-    }
-    &.focus-visible {
-      border-color: var(--light-theme);
-    }
-  }
-
-  &__btn {
-    position: absolute;
-    width: auto;
-    padding-right: 15px;
-    padding-left: 15px;
-    height: 100%;
-    top: 0;
-    right: 0;
-    fill: var(--light-theme);
-    transform-origin: center center;
-    transition-property: fill;
-    transition-timing-function: ease;
-    transition-duration: .3s;
-    &:hover, &.focus-visible {
-      fill: var(--hover);
-    }
-    &:active {
-      fill: var(--active);
-    }
-  }
-  &__svg {
-    width: rem(25);
-    height: 100%;
-  }
-}
-
+// to glue the footer to the bottom
 .main {
   margin-bottom: auto;
 }
 
 .characters {
   margin-bottom: rem(30);
+
   &__list {
     display: grid;
     grid-template-columns: repeat(3, 1fr); // IE
@@ -119,12 +53,12 @@
   }
 
   &__name {
-    align-self: center;
     width: 100%;
     padding-top: rem(20);
     padding-right: rem(18);
-    text-align: center;
+    align-self: center;
     font-size: rem(22);
+    text-align: center;
   }
 
   &__info {
@@ -149,6 +83,7 @@
     align-items: flex-end;
     gap: 6px;
     width: fit-content;
+
     &::after {
       width: 15px;
       height: 15px;
@@ -176,10 +111,11 @@
     border: 2px solid var(--pasive);
     font-size: rem(18);
     color: var(--pasive);
-    z-index: 2;
     transition-property: color, opacity;
     transition-duration: .3s;
     transition-timing-function: ease-in-out;
+    z-index: 2;
+
     &::before {
       position: absolute;
       width: 100%;
@@ -188,13 +124,15 @@
       top: 0;
       content: '';
       background-color: var(--pasive);
-      z-index: -1;
       transform: translateX(-100%);
       transition: transform .3s ease-in-out;
+      z-index: -1;
     }
 
-    &:hover, &.focus-visible {
+    &:hover,
+    &.focus-visible {
       color: var(--primary);
+
       &::before {
         transform: none;
       }
@@ -203,14 +141,16 @@
     &:active {
       opacity: .7;
     }
-  }
 
-  &__btn.disabled {
-    opacity: .2;
-    color: var(--primary);
-    cursor: initial;
-    &::before {
-      transform: translateX(0);
+    // disabled button
+    &.disabled {
+      opacity: .2;
+      color: var(--primary);
+      cursor: initial;
+
+      &::before {
+        transform: translateX(0);
+      }
     }
   }
 }
@@ -222,6 +162,7 @@
   line-height: rem(38);
   align-items: center;
   font-size: rem(28);
+
   &::after {
     flex: 1 1 0;
     height: rem(4);

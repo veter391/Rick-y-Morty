@@ -1,9 +1,57 @@
 // screen = 900px
-@media (max-width: 796px) {
+@media (max-width: 950px) {
+  // container
+  .container {
+    padding-right: 35px;
+    padding-left: 35px;
+  }
 
-}
+  // aditionals
+  .aditional {
+    right: 5px;
+    bottom: 12px;
 
-// screen = 400px
-@media (max-width: 400px) {
+    &__theme,
+    &__totop {
+      width: 35px;
+      height: 35px;
+    }
 
+    &__totop {
+      margin-bottom: 10px;
+    }
+  }
+
+  // items
+  .characters {
+    &__list {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    &__title {
+      flex-direction: column;
+    }
+
+    &__img{
+      margin: 0 auto;
+      margin-bottom: rem(12);
+      border-bottom-left-radius: 50%;
+    }
+
+    &__name {
+      padding: 0 rem(10);
+      font-size: 1rem;
+    }
+
+    &__info {
+      padding: 0 rem(10) rem(10) rem(10);
+      font-size: rem(13);
+    }
+
+    &__status::after {
+      width: 12px;
+      height: 12px;
+    }
+  }
 }

@@ -123,6 +123,15 @@ window.addEventListener('DOMContentLoaded', function () {
     getCharacters(_URL + `?page=${characterPage}&name=${name}`);
   }
 
+  // get character and validete input
+  function getValidCharacters(characterPage) {
+    // simple validate for input
+    const name = form.search.value.replace(/[^a-zA-Z0-9 ]/g, "");
+
+    // calling getCharacters() and filtering it by name
+    getCharacters(_URL + `?page=${characterPage}&name=${name}`);
+  }
+
   function findCharacter(e){
     // delete default settings of form
     e.preventDefault();
@@ -133,7 +142,9 @@ window.addEventListener('DOMContentLoaded', function () {
     // clear characters list and reset loader
     resetList();
 
+    // Validate input and get characters
     getValidCharacters(charactersPage);
+
   };
 
   function resetList() {
@@ -163,7 +174,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
   // ### START ###
   start();
-
 
 
   // ### EVENTS ###
@@ -198,7 +208,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
   //check always when input something or submit form using callback
   form.addEventListener('input', findCharacter);
-  form.addEventListener('submit', findCharacter);
+  form.addEventListener('submit', e => {
+    // change placeholder when submit clear input
+    form.search.placeholder = e.target.search.value.trim() ? 'Search...' : 'Enter your character!';
+    findCharacter(e);
+  });
 
 
 });
