@@ -12,10 +12,7 @@ html(lang="en")
     title Rick y Morty
 
     //- fonts
-    link(rel="preload" href="fonts/OpenSans-Bold.woff2" as="font" type="font/woff2" crossorigin)
     link(rel="preload" href="fonts/OpenSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin)
-    link(rel="preload" href="fonts/OpenSans-Regular.woff2" as="font" type="font/woff2" crossorigin)
-    link(rel="preload" href="fonts/OpenSans-Light.woff2" as="font" type="font/woff2" crossorigin)
     //- styles
     link(rel="stylesheet", href="css/style.min.css")
     //- scripts
@@ -31,10 +28,18 @@ html(lang="en")
       //- sections
       main.main
         include html/main.pug
-      //- footer
-      include html/footer.pug
 
       //- aditional btns change theme and to top
       .aditional
-        button.aditional__totop.btn-reset.btn(data-to="#header") to top
-        button.aditional__theme.btn-reset.btn theme
+        button.aditional__totop.btn-reset.btn(aria-label="go to top" data-to="#header")
+          svg.aditional__svg(aria-hidden="true")
+            use(xlink:href="img/sprite.svg#totop")
+        button.aditional__theme.btn-reset.btn(aria-label="change hteme")
+          svg.aditional__svg.aditional__theme_light(aria-hidden="true")
+            use(xlink:href="img/sprite.svg#light")
+          svg.aditional__svg.aditional__theme_dark(aria-hidden="true")
+            use(xlink:href="img/sprite.svg#dark")
+
+      //- footer
+      include html/footer.pug
+
