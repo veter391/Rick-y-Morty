@@ -94,8 +94,8 @@ window.addEventListener('DOMContentLoaded', function () {
         charactersList.innerHTML = `
             <li class="server-error">
               <picture class="server-error-picture">
-                <source srcset="img/error.webp 1x, img/error@2x.webp 2x" type="image/webp">
-                <img class="server-error-img" src="img/error.png" srcset="img/error.png 1x, img/error@2x.png 2x" alt="error">
+                <source srcset="img/error.webp" type="image/webp">
+                <img class="server-error-img" src="img/error.png" srcset="img/error.png" alt="error">
               </picture>
               <p>${err}</p>
             </li>
