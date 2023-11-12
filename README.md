@@ -10,7 +10,7 @@
 ```
 
 ## Demo
-[View Demo](https://veter391.github.io/RickMortyDemo/)
+[View Demo](https://veter391.github.io/Rick-y-Morty/)
 
 <!-- !Documentación: proporcionar una documentación de la pila tecnológica utilizada,
 !instrucciones para poner en marcha el proyecto e idealmente un enlace a una demo. 
